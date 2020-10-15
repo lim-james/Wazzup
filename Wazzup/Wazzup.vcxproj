@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Browser.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Helpers.cpp" />
     <ClCompile Include="main.cpp" />
@@ -123,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base.h" />
+    <ClInclude Include="Browser.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Helpers.h" />
     <ClInclude Include="Rest.h" />

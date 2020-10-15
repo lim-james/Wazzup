@@ -1,4 +1,4 @@
-#define MASTER
+//#define MASTER
 
 #ifdef MASTER
 
@@ -8,6 +8,7 @@
 #include <string>
 
 int main() {
+
 	std::cout << "Welcome back.\n";
 
 	while (true) {

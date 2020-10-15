@@ -7,3 +7,4 @@ std::wstring Helpers::ToUTF16(std::string const & str, int const & cp) {
 	MultiByteToWideChar(cp, 0, &str[0], (int)str.size(), &res[0], sz);
 	return res;
 }
+

@@ -30,6 +30,9 @@
     <ClCompile Include="TTS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Browser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -45,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Browser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
