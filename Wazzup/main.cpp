@@ -36,16 +36,28 @@ int main() {
 
 #include "Client.h"
 
+#include <windows.h>
+#include <Lmcons.h>
+
+#include <iostream>
+
 int main() {
 
+#ifndef _DEBUG
 	FreeConsole();
+#endif
 
 	const ProcessMap map = Client::Create();
-
 	std::string prev = "";
 
+	char username[UNLEN + 1];
+	DWORD usernameLength = UNLEN + 1;
+	GetUserName(username, &usernameLength);
+	
+	PollCallback poll = Client::GetPoll(std::string(username, usernameLength));
+
 	while (true) {
-		const std::string current = Client::Poll();
+		const std::string current = poll();
 
 		if (current != prev) {
 			Client::Update(current, map);

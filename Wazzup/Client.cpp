@@ -2,6 +2,7 @@
 
 // modules
 #include "TTS.h"
+#include "Helpers.h"
 #include "Browser.h"
 
 ProcessMap Client::Create() {
@@ -18,16 +19,19 @@ void Client::Destroy() {
 	Browser::Destroy();
 }
 
-std::string Client::Poll() {
-	const REST::Response response = REST::SendRequest(
-		L"wazzup-b5b3f.firebaseio.com",
-		L"/broadcast.json",
-		L"GET",
-		nullptr,
-		0
-	);
+PollCallback Client::GetPoll(std::string const & path) {
+	const std::wstring domain = Helpers::ToUTF16("/dms/" + path + ".json", CP_UTF8);
+	return ([domain]() -> std::string {
+		const REST::Response response = REST::SendRequest(
+			HOST,
+			domain,
+			L"GET",
+			nullptr,
+			0
+		);
 
-	return response.body.substr(1, response.body.length() - 2);
+		return response.body.substr(1, response.body.length() - 2);
+	});
 }
 
 void Client::Update(
