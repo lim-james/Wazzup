@@ -118,7 +118,8 @@
     <ClCompile Include="Browser.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Helpers.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="main_client.cpp" />
+    <ClCompile Include="main_master.cpp" />
     <ClCompile Include="Rest.cpp" />
     <ClCompile Include="TTS.cpp" />
   </ItemGroup>
@@ -127,6 +128,7 @@
     <ClInclude Include="Browser.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Helpers.h" />
+    <ClInclude Include="Propeties.h" />
     <ClInclude Include="Rest.h" />
     <ClInclude Include="TTS.h" />
   </ItemGroup>
