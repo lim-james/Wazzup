@@ -27,8 +27,7 @@ int main() {
 			HOST,
 			path,
 			L"PUT",
-			(void*)buffer.c_str(),
-			buffer.size()
+			buffer
 		);
 
 		std::cout << response.body << '\n';

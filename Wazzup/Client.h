@@ -14,7 +14,10 @@ namespace Client {
 	ProcessMap Create();
 	void Destroy();
 
-	PollCallback GetPoll(std::string const & path);
+	std::string GetUsername();
+	void SendPulse(std::string const & username);
+
+	PollCallback GetPoll(std::string const & username);
 
 	void Update(
 		std::string const & message,

@@ -4,8 +4,6 @@
 
 #include "Client.h"
 
-#include <windows.h>
-#include <Lmcons.h>
 
 #include <iostream>
 
@@ -18,11 +16,11 @@ int main() {
 	const ProcessMap map = Client::Create();
 	std::string prev = "";
 
-	char username[UNLEN + 1];
-	DWORD usernameLength = UNLEN + 1;
-	GetUserName(username, &usernameLength);
+	// send pulse to server
+	const std::string username = Client::GetUsername();
+	Client::SendPulse(username);
 	
-	PollCallback poll = Client::GetPoll(std::string(username, usernameLength));
+	PollCallback poll = Client::GetPoll(username);
 
 	while (true) {
 		const std::string current = poll();
@@ -34,9 +32,6 @@ int main() {
 		
 		Sleep(REFRESH_DELAY);
 	}
-
-	//pVoice->Release();
-	//pVoice = NULL;
 
 	Client::Destroy();
 

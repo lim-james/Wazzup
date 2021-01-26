@@ -5,6 +5,22 @@
 #include "Helpers.h"
 #include "Browser.h"
 
+#include <windows.h>
+#include <Lmcons.h>
+
+#include <iostream>
+#include <algorithm>
+
+std::string Client::GetUsername() {
+	char ptr[UNLEN + 1];
+	DWORD length = UNLEN + 1;
+	GetUserName(ptr, &length);
+
+	std::string result(ptr, length - 1);
+	std::replace(result.begin(), result.end(), ' ', '_');
+	return result;
+}
+
 ProcessMap Client::Create() {
 	ProcessMap result;
 	
@@ -19,17 +35,15 @@ void Client::Destroy() {
 	Browser::Destroy();
 }
 
-PollCallback Client::GetPoll(std::string const & path) {
-	const std::wstring domain = Helpers::ToUTF16("/dms/" + path + ".json", CP_UTF8);
-	return ([domain]() -> std::string {
-		const REST::Response response = REST::SendRequest(
-			HOST,
-			domain,
-			L"GET",
-			nullptr,
-			0
-		);
+void Client::SendPulse(std::string const & username) {
+	const std::wstring domain = Helpers::ToUTF16("/dms/" + username + ".json", CP_UTF8);
+	REST::SendRequest(HOST, domain, L"PUT", "\"ALIVE\"");
+}
 
+PollCallback Client::GetPoll(std::string const & username) {
+	const std::wstring domain = Helpers::ToUTF16("/dms/" + username + ".json", CP_UTF8);
+	return ([domain]() -> std::string {
+		const REST::Response response = REST::SendRequest(HOST, domain, L"GET");
 		return response.body.substr(1, response.body.length() - 2);
 	});
 }
