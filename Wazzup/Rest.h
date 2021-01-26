@@ -13,13 +13,26 @@ namespace REST {
 		std::vector<BYTE> rawBody;
 	};
 
-	std::string GetStr(std::vector<BYTE> const& arr);
+	std::string GetStr(std::vector<BYTE> const & arr);
 
 	Response SendRequest(
-		std::wstring const& domain, 
-		std::wstring const& path, 
-		std::wstring const& method, 
-		void *body, 
+		std::wstring const & domain, 
+		std::wstring const & path, 
+		std::wstring const & method
+	);
+
+	Response SendRequest(
+		std::wstring const & domain,
+		std::wstring const & path,
+		std::wstring const & method,
+		std::string const & body
+	);
+
+	Response SendRequest(
+		std::wstring const & domain, 
+		std::wstring const & path, 
+		std::wstring const & method, 
+		void * body, 
 		DWORD bodySize
 	);
 };

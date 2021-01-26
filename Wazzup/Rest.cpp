@@ -15,9 +15,32 @@ std::string REST::GetStr(std::vector<BYTE> const & arr) {
 }
 
 REST::Response REST::SendRequest(
-	std::wstring const& domain, 
-	std::wstring const& path, 
-	std::wstring const& method, 
+	std::wstring const & domain,
+	std::wstring const & path,
+	std::wstring const & method
+) {
+	return SendRequest(domain, path, method, nullptr, 0);
+}
+
+REST::Response REST::SendRequest(
+	std::wstring const & domain,
+	std::wstring const & path,
+	std::wstring const & method,
+	std::string const & body
+) {
+	return SendRequest(
+		domain,
+		path,
+		method,
+		(void*)body.c_str(),
+		body.size()
+	);
+}
+
+REST::Response REST::SendRequest(
+	std::wstring const & domain, 
+	std::wstring const & path, 
+	std::wstring const & method, 
 	void *body, 
 	DWORD bodySize
 ) {
