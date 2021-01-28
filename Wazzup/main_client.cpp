@@ -17,18 +17,20 @@ int main() {
 
 	// send pulse to server
 	const std::string username = Client::GetUsername();
-	Client::SendPulse(username, Client::ResponseHandler);
 	
 	// fetch initial 
+	MonitorCallback monitor = Client::GetMonitor(username);
+	PulseCallback pulse = Client::GetPulse(username, Client::ResponseHandler);
 	PollCallback poll = Client::GetPoll(username);
-	std::string prev = poll();
+
+	pulse();
 
 	while (true) {
-		const std::string current = poll();
-
-		if (current != prev) {
-			Client::Update(current, map);
-			prev = current;
+		if (monitor() == "DEAD") {
+			const std::string cmd = poll();
+			const std::string response = Client::ProcessCommand(cmd, map);
+			Client::Respond(username, response, Client::ResponseHandler);
+			pulse();
 		}
 		
 		Sleep(REFRESH_DELAY);

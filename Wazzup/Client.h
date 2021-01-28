@@ -8,23 +8,28 @@
 #include <functional>
 
 typedef std::function<std::string()> PollCallback;
+typedef std::function<void()> PulseCallback;
+typedef std::function<std::string()> MonitorCallback;
 
 namespace Client {
 
+	/// Initialise client map
 	ProcessMap Create();
+	/// Destructor
 	void Destroy();
 
+	/// Returns device username
 	std::string GetUsername();
-	void SendPulse(std::string const & username, REST::ResponseCallback callback);
 
-	PollCallback GetPoll(std::string const & username);
-
-	void Update(
-		std::string const & message,
-		ProcessMap const & map
+	/// Returns a monitor of the state
+	MonitorCallback GetMonitor(std::string const & username);
+	/// Returns a pulse function with username
+	PulseCallback GetPulse(
+		std::string const & username, 
+		REST::ResponseCallback callback
 	);
-
-	// helper methods
+	/// Returns the poll function with username
+	PollCallback GetPoll(std::string const & username);
 
 	bool SafeAdd(
 		Process const & process,

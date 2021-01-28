@@ -35,12 +35,22 @@ void Client::Destroy() {
 	Browser::Destroy();
 }
 
-void Client::SendPulse(
+MonitorCallback Client::GetMonitor(std::string const & username) {
+	const std::wstring domain = Helpers::ToUTF16("/dms/" + username + "/state.json", CP_UTF8);
+	return ([domain]() -> std::string {
+		const REST::Response response = REST::SendRequest(HOST, domain, L"GET");
+		return response.body.substr(1, response.body.length() - 2);
+	});
+}
+
+PulseCallback Client::GetPulse(
 	std::string const & username, 
 	REST::ResponseCallback callback
 ) {
 	const std::wstring domain = Helpers::ToUTF16("/dms/" + username + "/state.json", CP_UTF8);
-	REST::SendRequestAsync(HOST, domain, L"PUT", "\"ALIVE\"", callback);
+	return ([domain, callback]() {
+		REST::SendRequestAsync(HOST, domain, L"PUT", "\"ALIVE\"", callback);
+	});
 }
 
 PollCallback Client::GetPoll(std::string const & username) {
@@ -50,17 +60,6 @@ PollCallback Client::GetPoll(std::string const & username) {
 		return response.body.substr(1, response.body.length() - 2);
 	});
 }
-
-void Client::Update(
-	std::string const & message,
-	ProcessMap const & map
-) {
-	if (message[0] == '/') 
-		ProcessCommand(message, map);
-	else 
-		map.at(OP_TTS)(message);
-}
-
 
 bool Client::SafeAdd(
 	Process const & process,
@@ -79,10 +78,12 @@ std::string Client::ProcessCommand(
 	ProcessMap const & map
 ) {
 	const size_t commandSize = message.find_first_of(' ');
-	const std::string command = message.substr(1, commandSize - 1);
+	const std::string command = message.substr(0, commandSize - 1);
 	const std::string body = message.substr(commandSize + 1);
 
-	if (command == "open") 
+	if (command == "tts") 
+		return map.at(OP_TTS)(body);
+	else if (command == "open") 
 		return map.at(OP_BROWSER)(body);
 
 	return "";

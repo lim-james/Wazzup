@@ -26,7 +26,7 @@ int main() {
 		std::string buffer = "";
 
 		std::cout << target << " > ";
-		std::cin >> buffer;
+		std::getline(std::cin, buffer);
 
 		const std::string cmd = Helpers::Trim(buffer);
 

@@ -6,12 +6,10 @@
 #include <sapi.h>
 
 namespace TTS {
-
 	Process Create();
 	void Destroy();
 
 	std::string Speak(ISpVoice * pVoice, std::string content);
-
 }
 
 #endif
