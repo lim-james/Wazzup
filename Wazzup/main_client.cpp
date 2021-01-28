@@ -14,13 +14,14 @@ int main() {
 #endif
 
 	const ProcessMap map = Client::Create();
-	std::string prev = "";
 
 	// send pulse to server
 	const std::string username = Client::GetUsername();
 	Client::SendPulse(username);
 	
+	// fetch initial 
 	PollCallback poll = Client::GetPoll(username);
+	std::string prev = poll();
 
 	while (true) {
 		const std::string current = poll();
