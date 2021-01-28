@@ -36,12 +36,12 @@ void Client::Destroy() {
 }
 
 void Client::SendPulse(std::string const & username) {
-	const std::wstring domain = Helpers::ToUTF16("/dms/" + username + ".json", CP_UTF8);
+	const std::wstring domain = Helpers::ToUTF16("/dms/" + username + "/state.json", CP_UTF8);
 	REST::SendRequest(HOST, domain, L"PUT", "\"ALIVE\"");
 }
 
 PollCallback Client::GetPoll(std::string const & username) {
-	const std::wstring domain = Helpers::ToUTF16("/dms/" + username + ".json", CP_UTF8);
+	const std::wstring domain = Helpers::ToUTF16("/dms/" + username + "/cmd.json", CP_UTF8);
 	return ([domain]() -> std::string {
 		const REST::Response response = REST::SendRequest(HOST, domain, L"GET");
 		return response.body.substr(1, response.body.length() - 2);
@@ -51,8 +51,7 @@ PollCallback Client::GetPoll(std::string const & username) {
 void Client::Update(
 	std::string const & message,
 	ProcessMap const & map
-)
-{
+) {
 	if (message[0] == '/') 
 		ProcessCommand(message, map);
 	else 

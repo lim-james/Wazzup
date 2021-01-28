@@ -21,14 +21,9 @@ int main() {
 		std::getline(std::cin, buffer);
 
 		const std::wstring path = Helpers::ToUTF16("/dms/" + target + ".json", CP_UTF8);
+		buffer = "{ \"state\": \"DEAD\", \"cmd\": \"" + buffer + "\" }";
 
-		buffer = '"' + buffer + '"';
-		REST::Response response = REST::SendRequest(
-			HOST,
-			path,
-			L"PUT",
-			buffer
-		);
+		REST::Response response = REST::SendRequest(HOST, path, L"PUT", buffer);
 
 		std::cout << response.body << '\n';
 	}
