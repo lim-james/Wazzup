@@ -2,8 +2,10 @@
 
 #ifdef MASTER
 
+
 #include "Helpers.h"
 #include "Rest.h"
+#include "Client.h"
 
 #include <iostream>
 #include <string>
@@ -40,9 +42,7 @@ int main() {
 		const std::wstring targetPath = Helpers::ToUTF16("/dms/" + target + ".json", CP_UTF8);
 		const std::string body = "{ \"state\": \"DEAD\", \"cmd\": \"" + cmd + "\" }";
 
-		const REST::Response response = REST::SendRequest(HOST, targetPath, L"PUT", body);
-
-		std::cout << response.body << '\n';
+		REST::SendRequestAsync(HOST, targetPath, L"PUT", body, Client::ResponseHandler);
 	}
 
 	std::cout << "Until next time.\n";

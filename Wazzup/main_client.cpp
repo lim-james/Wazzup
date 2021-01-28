@@ -31,6 +31,9 @@ int main() {
 			const std::string response = Client::ProcessCommand(cmd, map);
 			Client::Respond(username, response, Client::ResponseHandler);
 			pulse();
+#ifdef _DEBUG
+			std::cout << ">>> " << cmd << "\n<<< " << response << "\n\n";
+#endif
 		}
 		
 		Sleep(REFRESH_DELAY);

@@ -78,7 +78,7 @@ std::string Client::ProcessCommand(
 	ProcessMap const & map
 ) {
 	const size_t commandSize = message.find_first_of(' ');
-	const std::string command = message.substr(0, commandSize - 1);
+	const std::string command = message.substr(0, commandSize);
 	const std::string body = message.substr(commandSize + 1);
 
 	if (command == "tts") 
