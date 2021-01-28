@@ -9,7 +9,7 @@
 
 int main() {
 
-#ifndef _DEBUG
+#if defined(_DEBUG) || defined(DEBUGGING)
 	FreeConsole();
 #endif
 
@@ -31,7 +31,7 @@ int main() {
 			const std::string response = Client::ProcessCommand(cmd, map);
 			Client::Respond(username, response, Client::ResponseHandler);
 			pulse();
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(DEBUGGING)
 			std::cout << ">>> " << cmd << "\n<<< " << response << "\n\n";
 #endif
 		}

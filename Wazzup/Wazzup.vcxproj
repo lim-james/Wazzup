@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClCompile Include="Browser.cpp" />
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Exec.cpp" />
     <ClCompile Include="Helpers.cpp" />
     <ClCompile Include="main_client.cpp" />
     <ClCompile Include="main_master.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="Base.h" />
     <ClInclude Include="Browser.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="Exec.h" />
     <ClInclude Include="Helpers.h" />
     <ClInclude Include="Propeties.h" />
     <ClInclude Include="Rest.h" />
