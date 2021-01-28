@@ -8,3 +8,10 @@ std::wstring Helpers::ToUTF16(std::string const & str, int const & cp) {
 	return res;
 }
 
+std::string Helpers::Trim(std::string s) {
+	int length = s.length();
+	while (length > 0 && s[0] == ' ') s.erase(0, 1);
+	while (length > 0 && s[length - 1] == ' ') s.erase(--length, 1);
+	return s;
+}
+

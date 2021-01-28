@@ -5,7 +5,7 @@
 #include <string>
 #include <functional>
 
-typedef std::function<void(std::string)> Process;
+typedef std::function<std::string(std::string)> Process;
 typedef std::map<unsigned, Process> ProcessMap;
 
 #endif

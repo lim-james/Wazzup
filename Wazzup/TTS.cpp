@@ -22,6 +22,7 @@ void TTS::Destroy() {
 	::CoUninitialize();
 }
 
-void TTS::Speak(ISpVoice * voice, std::string content) {
+std::string TTS::Speak(ISpVoice * voice, std::string content) {
 	voice->Speak(Helpers::ToUTF16(content, CP_UTF8).c_str(), 0, NULL);
+	return "";
 }

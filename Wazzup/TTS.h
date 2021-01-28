@@ -10,7 +10,7 @@ namespace TTS {
 	Process Create();
 	void Destroy();
 
-	void Speak(ISpVoice * pVoice, std::string content);
+	std::string Speak(ISpVoice * pVoice, std::string content);
 
 }
 

@@ -8,7 +8,7 @@ namespace Browser {
 	Process Create();
 	void Destroy();
 
-	void Open(std::string content);
+	std::string Open(std::string content);
 }
 
 #endif

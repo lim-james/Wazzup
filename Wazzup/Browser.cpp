@@ -11,6 +11,7 @@ Process Browser::Create() {
 void Browser::Destroy() {
 }
 
-void Browser::Open(std::string content) {
+std::string Browser::Open(std::string content) {
 	ShellExecute(0, 0, content.c_str(), 0, 0, SW_SHOW);
+	return "";
 }
