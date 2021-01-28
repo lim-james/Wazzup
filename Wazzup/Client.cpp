@@ -35,9 +35,12 @@ void Client::Destroy() {
 	Browser::Destroy();
 }
 
-void Client::SendPulse(std::string const & username) {
+void Client::SendPulse(
+	std::string const & username, 
+	REST::ResponseCallback callback
+) {
 	const std::wstring domain = Helpers::ToUTF16("/dms/" + username + "/state.json", CP_UTF8);
-	REST::SendRequest(HOST, domain, L"PUT", "\"ALIVE\"");
+	REST::SendRequestAsync(HOST, domain, L"PUT", "\"ALIVE\"", callback);
 }
 
 PollCallback Client::GetPoll(std::string const & username) {
@@ -71,7 +74,7 @@ bool Client::SafeAdd(
 	return true;
 }
 
-void Client::ProcessCommand(
+std::string Client::ProcessCommand(
 	std::string const & message, 
 	ProcessMap const & map
 ) {
@@ -80,6 +83,22 @@ void Client::ProcessCommand(
 	const std::string body = message.substr(commandSize + 1);
 
 	if (command == "open") 
-		map.at(OP_BROWSER)(body);
+		return map.at(OP_BROWSER)(body);
+
+	return "";
+}
+
+void Client::Respond(
+	std::string const & username, 
+	std::string const & body,
+	REST::ResponseCallback callback
+) {
+	const std::wstring domain = Helpers::ToUTF16("/dms/" + username + "/response.json", CP_UTF8);
+	REST::SendRequestAsync(HOST, domain, L"PUT", '"' + body + '"', callback);
+}
+
+void Client::ResponseHandler(REST::Response response) {
+	if (response.isSuccessful)
+		std::cout << "\n===== WARNING =====\n" << response.body << "=====   END   =====\n";
 }
 

@@ -1,7 +1,7 @@
 #ifndef PROPERTIES_H
 #define PROPERTIES_H
 
-#define MASTER
+//#define MASTER
 
 #define HOST L"wazzup-b5b3f.firebaseio.com"
 

@@ -3,7 +3,7 @@
 #ifndef MASTER
 
 #include "Client.h"
-
+#include "Rest.h"
 
 #include <iostream>
 
@@ -17,7 +17,7 @@ int main() {
 
 	// send pulse to server
 	const std::string username = Client::GetUsername();
-	Client::SendPulse(username);
+	Client::SendPulse(username, Client::ResponseHandler);
 	
 	// fetch initial 
 	PollCallback poll = Client::GetPoll(username);

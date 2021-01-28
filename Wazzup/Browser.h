@@ -9,6 +9,7 @@ namespace Browser {
 	void Destroy();
 
 	std::string Open(std::string content);
+
 }
 
 #endif

@@ -22,6 +22,15 @@ REST::Response REST::SendRequest(
 	return SendRequest(domain, path, method, nullptr, 0);
 }
 
+void REST::SendRequestAsync(
+	std::wstring const & domain, 
+	std::wstring const & path, 
+	std::wstring const & method, 
+	ResponseCallback callback
+) {
+	SendRequestAsync(domain, path, method, nullptr, 0, callback);
+}
+
 REST::Response REST::SendRequest(
 	std::wstring const & domain,
 	std::wstring const & path,
@@ -35,6 +44,16 @@ REST::Response REST::SendRequest(
 		(void*)body.c_str(),
 		body.size()
 	);
+}
+
+void REST::SendRequestAsync(
+	std::wstring const & domain, 
+	std::wstring const & path, 
+	std::wstring const & method, 
+	std::string const & body, 
+	ResponseCallback callback
+) {
+	SendRequestAsync(domain, path, method, body, callback);
 }
 
 REST::Response REST::SendRequest(
@@ -145,4 +164,15 @@ REST::Response REST::SendRequest(
 	response.body = GetStr(response.rawBody);
 
 	return response;
+}
+
+void REST::SendRequestAsync(
+	std::wstring const & domain, 
+	std::wstring const & path, 
+	std::wstring const & method, 
+	void * body, 
+	DWORD bodySize, 
+	ResponseCallback callback
+) {
+	callback(SendRequest(domain, path, method, body, bodySize));
 }

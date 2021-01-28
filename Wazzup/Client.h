@@ -15,7 +15,7 @@ namespace Client {
 	void Destroy();
 
 	std::string GetUsername();
-	void SendPulse(std::string const & username);
+	void SendPulse(std::string const & username, REST::ResponseCallback callback);
 
 	PollCallback GetPoll(std::string const & username);
 
@@ -32,10 +32,18 @@ namespace Client {
 		unsigned const & id
 	);
 
-	void ProcessCommand(
+	std::string ProcessCommand(
 		std::string const & message,
 		ProcessMap const & map
 	);
+
+	void Respond(
+		std::string const & username, 
+		std::string const & body,
+		REST::ResponseCallback callback
+	);
+
+	void ResponseHandler(REST::Response response);
 
 };
 
