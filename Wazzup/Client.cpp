@@ -98,7 +98,7 @@ void Client::Respond(
 }
 
 void Client::ResponseHandler(REST::Response response) {
-	if (response.isSuccessful)
-		std::cout << "\n===== WARNING =====\n" << response.body << "=====   END   =====\n";
+	if (!response.isSuccessful)
+		std::cout << "\n===== WARNING =====\n" << response.body << "\n=====   END   =====\n";
 }
 

@@ -53,7 +53,14 @@ void REST::SendRequestAsync(
 	std::string const & body, 
 	ResponseCallback callback
 ) {
-	SendRequestAsync(domain, path, method, body, callback);
+	SendRequestAsync(
+		domain, 
+		path, 
+		method, 
+		(void*)body.c_str(),
+		body.size(),
+		callback
+	);
 }
 
 REST::Response REST::SendRequest(
