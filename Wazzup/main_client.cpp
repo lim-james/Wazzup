@@ -9,7 +9,7 @@
 
 int main() {
 
-#if defined(_DEBUG) || defined(DEBUGGING)
+#if not defined(_DEBUG) && not defined(DEBUGGING)
 	FreeConsole();
 #endif
 

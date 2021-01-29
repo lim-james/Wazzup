@@ -2,7 +2,6 @@
 
 #ifdef MASTER
 
-
 #include "Helpers.h"
 #include "Rest.h"
 #include "Client.h"
